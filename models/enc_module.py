@@ -1,7 +1,3 @@
-import tensorflow as tf
-from tensorflow import keras
- 
-
 
 '''
 This class is to generate an encoder model
@@ -9,6 +5,7 @@ This class is to generate an encoder model
 attribute:
     layer_count: the number of Conv2D layers.
     layer_settings[]: the setting of each layer.
+        dict format: [filters, kernel_size, strides]
 
 method:
     call: call the model.
@@ -19,6 +16,12 @@ method:
 
     ---This class is not finished---
 '''
+
+#TODO: residual blocks
+
+
+import tensorflow as tf
+from tensorflow import keras
 
 
 
@@ -32,7 +35,11 @@ class Encoder(tf.keras.Model):
         self.mid = []
 
         for i in range(layer_count):
-            pass   #TODO: generate the Conv2D layers with "layer_settings" attribute, and save in self.layer_saver
+            self.layer_saver.append(keras.layers.Conv2D(
+                                                filters=layer_settings[i]['filter'],
+                                                kernel_size=layer_settings[i]['kernel_size'],
+                                                strides=(layer_settings[i]['strides'], layer_settings[i]['strides']),
+                                                padding='same'))
 
 
     def call(self, inputs):
@@ -42,12 +49,16 @@ class Encoder(tf.keras.Model):
 
         # run through each layer
         for i in range(self.layer_count):
+
             x = self.layer_saver[i](x)
+            if i != self.layer_count - 1:
+                x = keras.layer.BatchNormalization()(x)
+                x = keras.layers.LeakyReLU()(x)
             
             # save the mid data everytime we call the model
             if i != self.layer_count - 1:
                 midtmp.append(x)
-        
+
         self.mid = midtmp
         return x
 

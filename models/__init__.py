@@ -4,6 +4,6 @@ This package provides the model architecture
 
 
 
-__all__ = ['enc_module', 'dec_module']
+__all__ = ['w_net']
 
 from models import *
