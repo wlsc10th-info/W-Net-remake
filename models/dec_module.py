@@ -31,7 +31,7 @@ class Decoder(tf.keras.Model):
 
         for i in range(layer_count):
             self.layer_saver.append(keras.layers.Conv2DTranspose(
-                                                filters=layer_settings[i]['filter'],
+                                                filters=layer_settings[i]['filters'],
                                                 kernel_size=layer_settings[i]['kernel_size'],
                                                 strides=(layer_settings[i]['strides'], layer_settings[i]['strides']),
                                                 padding='same'))
@@ -45,12 +45,12 @@ class Decoder(tf.keras.Model):
 
             x = self.layer_saver[i](x)
             if i != self.layer_count - 1:
-                x = keras.layer.BatchNormalization()(x)
+                x = keras.layers.BatchNormalization()(x)
                 x = keras.layers.LeakyReLU()(x)
             
             # concat the mid data from encoder(s)
             if i != self.layer_count - 1:
-                x = tf.concat([x, mid1[-(i+1)], mid2[(i+1)]], len(x.shape)-1)
-            print(f"round{i}: shape = {x.shape}")
+                x = tf.concat([x, mid1[-(i+1)], mid2[-(i+1)]], len(x.shape)-1)
+            print(f"decoder: round{i}: shape = {x.shape}")
         
         return x

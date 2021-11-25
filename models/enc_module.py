@@ -36,7 +36,7 @@ class Encoder(tf.keras.Model):
 
         for i in range(layer_count):
             self.layer_saver.append(keras.layers.Conv2D(
-                                                filters=layer_settings[i]['filter'],
+                                                filters=layer_settings[i]['filters'],
                                                 kernel_size=layer_settings[i]['kernel_size'],
                                                 strides=(layer_settings[i]['strides'], layer_settings[i]['strides']),
                                                 padding='same'))
@@ -52,7 +52,7 @@ class Encoder(tf.keras.Model):
 
             x = self.layer_saver[i](x)
             if i != self.layer_count - 1:
-                x = keras.layer.BatchNormalization()(x)
+                x = keras.layers.BatchNormalization()(x)
                 x = keras.layers.LeakyReLU()(x)
             
             # save the mid data everytime we call the model

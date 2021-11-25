@@ -1,5 +1,5 @@
 import tensorflow as tf
-import enc_module, dec_module
+from models import enc_module, dec_module
 
 
 class W_net(tf.keras.Model):
@@ -38,11 +38,11 @@ class W_net(tf.keras.Model):
         self.dec = dec_module.Decoder(self.layer_count, self.dec_layer_settings)
 
 
-        def call(self, inputs_p, inputs_r):
+    def call(self, inputs_p, inputs_r):
 
-            enc_out_p = self.enc_p(inputs_p)
-            enc_out_r = self.enc_r(inputs_r)
-            enc_out = tf.concat([enc_out_p, enc_out_r], len(enc_out_p.shape)-1)
-            output = self.dec(enc_out, self.enc_p.get_mid(), self.enc_r.get_mid())
+        enc_out_p = self.enc_p(inputs_p)
+        enc_out_r = self.enc_r(inputs_r)
+        enc_out = tf.concat([enc_out_p, enc_out_r], len(enc_out_p.shape)-1)
+        output = self.dec(enc_out, self.enc_p.get_mid(), self.enc_r.get_mid())
 
-            return output            
+        return output            
