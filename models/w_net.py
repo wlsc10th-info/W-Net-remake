@@ -1,6 +1,5 @@
 import tensorflow as tf
-from models import enc_module, dec_module
-
+from . import enc_module, dec_module
 
 class W_net(tf.keras.Model):
 
@@ -13,24 +12,24 @@ class W_net(tf.keras.Model):
         self.dec_layer_settings = []
 
         self.enc_p_layer_settings.append({'filters' : 64,  'kernel_size' : 5, 'strides' : 2})
-        self.enc_p_layer_settings.append({'filters' : 128, 'kernel_size' : 3, 'strides' : 2})
-        self.enc_p_layer_settings.append({'filters' : 256, 'kernel_size' : 3, 'strides' : 2})
-        self.enc_p_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
-        self.enc_p_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
-        self.enc_p_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
+        self.enc_p_layer_settings.append({'filters' : 128, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_p_layer_settings.append({'filters' : 256, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_p_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_p_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_p_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
 
         self.enc_r_layer_settings.append({'filters' : 64,  'kernel_size' : 5, 'strides' : 2})
-        self.enc_r_layer_settings.append({'filters' : 128, 'kernel_size' : 3, 'strides' : 2})
-        self.enc_r_layer_settings.append({'filters' : 256, 'kernel_size' : 3, 'strides' : 2})
-        self.enc_r_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
-        self.enc_r_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
-        self.enc_r_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
+        self.enc_r_layer_settings.append({'filters' : 128, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_r_layer_settings.append({'filters' : 256, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_r_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_r_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
+        self.enc_r_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
 
-        self.dec_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
-        self.dec_layer_settings.append({'filters' : 512, 'kernel_size' : 2, 'strides' : 2})
-        self.dec_layer_settings.append({'filters' : 256, 'kernel_size' : 2, 'strides' : 2})
-        self.dec_layer_settings.append({'filters' : 128, 'kernel_size' : 3, 'strides' : 2})
-        self.dec_layer_settings.append({'filters' : 64,  'kernel_size' : 3, 'strides' : 2})
+        self.dec_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
+        self.dec_layer_settings.append({'filters' : 512, 'kernel_size' : 5, 'strides' : 2})
+        self.dec_layer_settings.append({'filters' : 256, 'kernel_size' : 5, 'strides' : 2})
+        self.dec_layer_settings.append({'filters' : 128, 'kernel_size' : 5, 'strides' : 2})
+        self.dec_layer_settings.append({'filters' : 64,  'kernel_size' : 5, 'strides' : 2})
         self.dec_layer_settings.append({'filters' : 1,   'kernel_size' : 5, 'strides' : 2})
         
         self.enc_p = enc_module.Encoder(self.layer_count, self.enc_p_layer_settings)
@@ -45,4 +44,5 @@ class W_net(tf.keras.Model):
         enc_out = tf.concat([enc_out_p, enc_out_r], len(enc_out_p.shape)-1)
         output = self.dec(enc_out, self.enc_p.get_mid(), self.enc_r.get_mid())
 
-        return output            
+        return output
+
