@@ -1,10 +1,10 @@
 import tensorflow as tf
 from . import enc_module, dec_module
 
-class W_net(tf.keras.Model):
+class W_Net_Generator(tf.keras.Model):
 
     def __init__(self):
-        super(W_net, self).__init__()
+        super(W_Net_Generator, self).__init__()
         
         self.layer_count = 6
         self.enc_p_layer_settings = []
