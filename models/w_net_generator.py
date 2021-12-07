@@ -1,5 +1,5 @@
 import tensorflow as tf
-from . import enc_module, dec_module
+from . import encoders, decoders
 
 class W_Net_Generator(tf.keras.Model):
 
@@ -32,9 +32,9 @@ class W_Net_Generator(tf.keras.Model):
         self.dec_layer_settings.append({'filters' : 64,  'kernel_size' : 5, 'strides' : 2})
         self.dec_layer_settings.append({'filters' : 1,   'kernel_size' : 5, 'strides' : 2})
         
-        self.enc_p = enc_module.Encoder(self.layer_count, self.enc_p_layer_settings)
-        self.enc_r = enc_module.Encoder(self.layer_count, self.enc_r_layer_settings)
-        self.dec = dec_module.Decoder(self.layer_count, self.dec_layer_settings)
+        self.enc_p = encoders.Encoder(self.layer_count, self.enc_p_layer_settings)
+        self.enc_r = encoders.Encoder(self.layer_count, self.enc_r_layer_settings)
+        self.dec = decoders.Decoder(self.layer_count, self.dec_layer_settings)
 
 
     def call(self, inputs_p, inputs_r):
