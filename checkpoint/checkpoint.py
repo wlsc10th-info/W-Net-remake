@@ -4,9 +4,11 @@ import tensorflow as tf
 
 class CheckpointHandler:
 
-    ckpt=tf.train.Checkpoint(step=tf.Variable(0))
-    manager = tf.train.CheckpointManager(ckpt, './ckpt', max_to_keep=3)
-    
+    def __init__(self, save_path):
+        self.save_path = save_path
+        self.ckpt = tf.train.Checkpoint(step=tf.Variable(0))
+        self.manager = tf.train.CheckpointManager(self.ckpt, save_path, max_to_keep=3)
+
     def save_checkpoint(self):    
         save_path=self.manager.save()
         print("Saved checkpoint for step {}: {}".format(int(self.ckpt.step), save_path))
@@ -18,3 +20,4 @@ class CheckpointHandler:
         else:
             print("Initializing from scratch.")
 
+handler = CheckpointHandler('./nhsuifhweo/isoefjoe')
